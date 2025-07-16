@@ -56,7 +56,7 @@ Services communicate via HTTPS with API key authentication and support both sync
 The easiest way to get started is using our [TypeScript SDK](https://github.com/RasmusLiltorp/taros-sdk):
 
 ```bash
-npm install @taros/sdk
+npm install @taros-ai/sdk
 ```
 
 
