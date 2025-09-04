@@ -16,39 +16,6 @@ Whether you're a startup, dev team, or hobbyist, Taros helps you spin up your ow
 
 - 🖼 When a user sends a screenshot or photo, Taros extracts the text using OCR, and can optionally pass both the text and the raw image to the AI model for visual understanding.
 
-- 🔄 Some operations (like vision processing or large document searches) take time. Taros supports async processing with callback URLs, so your client can continue without blocking and receive results once ready.
-
-- 🔐 Taros uses layered authentication: API keys for infrastructure-level security, and JWTs for bot-specific identity. This makes it safe to use in both server-side code and browser-based apps.
-
----
-
-## 🧠 How it works
-
-When your app or bot sends a request, Taros orchestrates the flow:
-
-1. Retrieves the bot's configuration
-2. (Optional) Searches relevant documents
-3. (Optional) Processes any attached images
-4. Sends the compiled context to the AI model
-5. Returns or pushes the response via callback
-   
----
-
-## ⚙️ Architecture
-
-Taros is built as a microservice system, orchestrated via a central controller that coordinates chat requests across modular services:
-
-- **Orchestrator**: Core logic and routing
-- **AI Service**: Handles model interactions, fallback, and OCR/vision integration *(currently only GPT)*
-- **Training Service**: Embeds and searches for documents
-- **OCR Service**: Extracts text from uploaded images
-- **Account Service**: Stores bot configs and billing data
-- **Configuration Layer**: Caches bot settings for ultra-fast access, even at scale
-- **Callback Support**: Lets long-running operations finish in the background
-
-
-Services communicate via HTTPS with API key authentication and support both synchronous and async patterns via callbacks.
-
 ---
 
 ## 🚀 Getting Started
@@ -81,9 +48,8 @@ console.log(response.message);
 These components are public and MIT licensed:
 
 - [**taros-sdk**](https://github.com/RasmusLiltorp/taros-sdk) – Official TypeScript SDK for authentication, chat requests, and configuration.
-- [**taros-public-api**](https://github.com/RasmusLiltorp/taros-public-api) – Lightweight API gateway that connects clients to the orchestrator service.
 
-The rest of the system is private but modular. You can self-host parts or connect via the public API.
+The rest of the system is private but modular. You can connect to our system via the public API.
 
 ---
 
