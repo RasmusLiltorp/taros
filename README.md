@@ -1,78 +1,126 @@
 # Taros.ai
 
-Taros is a modular AI-powered support platform designed to make intelligent assistants easy to configure, secure to operate, and powerful enough to integrate vision, documents, and real-time chat. 
+An AI-powered chatbot platform that helps businesses deploy intelligent support assistants with document understanding, semantic search, and embeddable widgets.
 
-It lets your users get smart, context-aware answers from their own documents, images, and data – in real time.
-
-Whether you're a startup, dev team, or hobbyist, Taros helps you spin up your own AI support bot in minutes – using either a few lines of code with an API key, or our plug-and-play tools.
+Built to make AI support accessible – configure your bot, connect your knowledge base, and embed it anywhere in minutes.
 
 ---
 
-## 💡 What can Taros do?
+## 💡 What is Taros?
 
-- 💬 Route any incoming question through a configurable AI backend. Taros currently uses GPT-4o by default, but is designed to support any LLM (e.g. Claude, Mistral, or your own model) through a pluggable architecture.
+- **Smart Document Search**: Upload PDFs or crawl websites – Taros automatically indexes content and retrieves relevant information when users ask questions.
 
-- 🧠 Upload and sync documents (PDF, Markdown, etc.), and Taros will embed and index them for semantic search. When a user asks a question, relevant snippets are automatically injected into the AI prompt.
+- **Embeddable Anywhere**: Drop a chat widget on your website (bubble or inline mode) with just a few lines of code.
 
-- 🖼 When a user sends a screenshot or photo, Taros extracts the text using OCR, and can optionally pass both the text and the raw image to the AI model for visual understanding.
+- **Multi-Bot Management**: Create multiple chatbots with different personalities, knowledge bases, and configurations – all from one dashboard.
+
+- **Image Understanding**: Users can share screenshots or photos, and Taros extracts text and context to provide better answers.
+
+- **Developer-Friendly**: Simple TypeScript SDK and REST API for seamless integration into your existing stack.
 
 ---
 
 ## 🚀 Getting Started
 
-The easiest way to get started is using our [TypeScript SDK](https://github.com/RasmusLiltorp/taros-sdk):
+### TypeScript SDK
 
 ```bash
 npm install @taros-ai/sdk
 ```
 
+```typescript
+import { createTarosClient } from '@taros-ai/sdk'
 
-## 📦 Example Use Case
+const client = await createTarosClient({
+  apiKey: 'your-bot-api-key',
+  botId: 'your-bot-id'
+})
 
-```ts
-const sdk = await createTarosClient();
+const response = await client.ask("What's your refund policy?")
+console.log(response.message)
 
-await sdk.initialize(); // handles login or headless env automatically
+// Streaming support
+for await (const chunk of client.askStream('How do I get started?')) {
+  process.stdout.write(chunk.value)
+}
+```
 
-const response = await sdk.ask("What's the refund policy?", {
-  botId: "customer-support",
-});
+### Embed the Widget
 
-console.log(response.message);
+```html
+<script src="https://widgets.taros.ai/loader.js"></script>
+<script>
+  window.TarosChat?.('init', {
+    botId: 'your-bot-id',
+    mode: 'bubble',
+    position: 'bottom-right',
+    theme: {
+      brandColor: '#2563eb',
+      mode: 'light'
+    }
+  })
+</script>
+```
+
+### REST API
+
+```bash
+curl -X POST https://api.taros.ai/bots/{botId}/chat \
+  -H "Authorization: Bearer YOUR_BOT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Hello!"}'
 ```
 
 ---
 
-## 🛠️ Open Source Components
+## ✨ Features
 
-These components are public and MIT licensed:
+**Document & Knowledge Management**
+- Crawl entire websites or upload documents (PDF, Markdown, etc.)
+- Automatic indexing with semantic search
+- Link multiple knowledge sources to each bot
+- Track ingestion jobs with real-time status updates
 
-- [**taros-sdk**](https://github.com/RasmusLiltorp/taros-sdk) – Official TypeScript SDK for authentication, chat requests, and configuration.
+**Customizable Bots**
+- Configure personality with custom system prompts
+- Fine-tune response style (temperature, length, etc.)
+- Enable citations and follow-up question suggestions
+- Multi-tenant with organization-based access control
 
-The rest of the system is private but modular. You can connect to our system via the public API.
+**Image Processing**
+- OCR text extraction from screenshots
+- Optional vision model analysis for visual context
+- Async processing for performance
+
+**Developer Experience**
+- TypeScript SDK with full type safety
+- REST API with streaming support
+- Session management built-in
+- Comprehensive error handling
+
+**Security & Reliability**
+- Bot-specific API keys with granular permissions
+- Rate limiting and abuse prevention
+- CAPTCHA protection for public-facing widgets
+- Session-based conversation persistence
 
 ---
 
 ## 👥 Who is Taros for?
 
-- Companies who want a smart, secure AI support bot without hiring a dev team
-
-- Startups building custom chatbots on top of modern AI models
-
-- Product teams who want to integrate support into their webapp in minutes
-
-- Developers looking for a modular, pluggable way to combine AI, documents, and images
-
-- Non-coders who prefer visual tools and plug-and-play setup
+- **SaaS Companies**: Add AI support to your product without building from scratch
+- **Startups**: Get production-ready chatbots in minutes, not months
+- **Support Teams**: Reduce ticket volume with intelligent self-service
+- **Developers**: Clean APIs that integrate seamlessly with existing tools
 
 ---
 
-## 📫 Questions?
+## 📫 Get Started
 
-Have a question, found a bug, or want to contribute? Open an issue and let's talk.
+Visit [**taros.ai**](https://taros.ai) to create your first bot.
 
-Explore features, use cases, and more at [**taros.ai**](https://taros.ai)
+Questions? Reach out at [contact@taros.ai](mailto:contact@taros.ai)
 
 ---
 
-© 2025 Taros.ai – All rights reserved.
+© 2025 Taros.ai
